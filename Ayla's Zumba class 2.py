@@ -76,25 +76,30 @@ while True:
         participant_dance = input ("Dance type of new participant: ").strip().casefold()
         
         new_participant = {"Name": participant_name,
-                           "Age": participant_age,
+                            "Age": participant_age,
                            "Genre": participant_genre,
                            "Niveau": participant_niveau,
                            "Dance": participant_dance}
         participants.append(new_participant)
-        print (new_participant["Name"], "has been added as a participant.")
+        print (new_participant["Name"].title(), "has been added as a participant.")
         
     if action  == ("remove participant").strip().casefold():
         participant_removed = input("Who would you like to remove as a participant? ").strip().casefold()
-        if any(p["Name"].casefold() == participant_removed.casefold() for p in participants):
-            print(p["Name"])
-            if participant_removed["abonnement_renouvle"].casefold() == False:
-                print("teste")
+        if any(p["Name"].casefold() == participant_removed for p in participants): # checks if any participant exists with any() function
+            for p in participants:
+                if p["Name"].casefold() == participant_removed:
+                    print(p) # this loop actually finds the participant and prints it
+                    participants.remove(p)
+                    print(p["Name"].title(), "has been removed")
+                    
+    if action == ("remove participants without subscription").strip().casefold():
+        for p in participants:
+            if p["abonnement_renouvle"]==False:
+                participants.remove(p)
+                print(p["Name"], "has been removed")
+        print ("\033[1mParticipants remaining:\033[0m")
+        for participant in participants:
+            print("-",{participant["Name"]})
         
-    
-    
-        
-        
-        
-        
+         
 
-    
