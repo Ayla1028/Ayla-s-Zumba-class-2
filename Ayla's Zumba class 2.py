@@ -10,12 +10,12 @@ while True:
     
     if action == "view participants":
         print ("\033[1mParticipants:\033[0m")
-        for participant in participants:
-            print("-",{participant["Name"]})
+        for p in participants:
+            print("-",p["Name"])
         
     if action == ("view details").strip().casefold():
         for participant in participants:
-            print(f"\033[1m Name:\033[0m{participant['Name']},\033[1m Age:\033[0m {participant['Age']}, \033[1m Genre:\033[0m {participant['Genre']}, \033[1m Niveau:\033[0m {participant['Niveau']}, \033[1m Dance:\033[0m {participant['Dance']}")
+            print(f"\033[1m Name:\033[0m{participant['Name']},\033[1m Age:\033[0m {participant['Age']}, \033[1m Genre:\033[0m {participant['Genre']}, \033[1m Niveau:\033[0m {participant['Niveau']}, \033[1m Dance:\033[0m {participant['Dance']},\033[1m Abonnement_renouvle:\033[0m {participant['abonnement_renouvle']}")
         
             
     if action == ("exit").strip().casefold():
@@ -31,11 +31,12 @@ while True:
                           f"\033[1mAge:\033[0m {participant['Age']}, "
                           f"\033[1mGenre:\033[0m {participant['Genre']}, "
                           f"\033[1mNiveau:\033[0m {participant['Niveau']}, "
-                          f"\033[1mDance:\033[0m {participant['Dance']}")
+                          f"\033[1mDance:\033[0m {participant['Dance']}, "
+                          f"\033[1mAbonnement renouvlé:\033[0m {participant['abonnement_renouvle']}" )
                  
         elif participant_entered not in participants:
             print(participant_entered, "is not a participant.")
-            answer = input ("Would you like to add "+participant_entered+ " as a participant?(Yes/No) ").strip().casefold()
+            answer = input ("Would you like to add "+participant_entered+ " as a participant?(Yes/No) ").title()
             if answer == "yes":
                 participant_name = participant_entered
                 participant_age = input ("Age of new participant: ").strip().casefold()
@@ -74,12 +75,15 @@ while True:
         participant_genre = input ("Gender of new participant: ").strip().casefold()
         participant_niveau = input("Level of new participant: ").strip().casefold()
         participant_dance = input ("Dance type of new participant: ").strip().casefold()
+        participant_abonnement_renouvle = input ("Participation rennouvlé (True\False): ").strip().casefold()=="true"
         
         new_participant = {"Name": participant_name,
                             "Age": participant_age,
                            "Genre": participant_genre,
                            "Niveau": participant_niveau,
-                           "Dance": participant_dance}
+                           "Dance": participant_dance,
+                           "abonnement_renouvle": participant_abonnement_renouvle}
+        
         participants.append(new_participant)
         print (new_participant["Name"].title(), "has been added as a participant.")
         
@@ -88,13 +92,16 @@ while True:
         if any(p["Name"].casefold() == participant_removed for p in participants): # checks if any participant exists with any() function
             for p in participants:
                 if p["Name"].casefold() == participant_removed:
-                    print(p) # this loop actually finds the participant and prints it
+                    #print(p) # this loop actually finds the participant and prints it
                     participants.remove(p)
-                    print(p["Name"].title(), "has been removed")
+                    print("\033[1m",p["Name"].title(),"\033[0m", "has been removed")
                     
     if action == ("remove participants without subscription").strip().casefold():
         for p in participants:
+            print(p['Name'])
+            print(p['abonnement_renouvle'])
             if p["abonnement_renouvle"]==False:
+                #print(p['Name'])
                 participants.remove(p)
                 print(p["Name"], "has been removed")
         print ("\033[1mParticipants remaining:\033[0m")
