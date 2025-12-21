@@ -106,7 +106,33 @@ while True:
                 print(p["Name"], "has been removed")
         print ("\033[1mParticipants remaining:\033[0m")
         for participant in participants:
-            print("-",{participant["Name"]})
+            print("-",participant["Name"])
+            
+    if action == ("number of participants in each level").strip().casefold():
+        level_counts = {}
+        
+        for p in participants:
+           level = p["Niveau"]
+           level_counts[level] = level_counts.get(level, 0) + 1
+           
+        for level, count in level_counts.items():
+            print(f"-\033[1m{level}\033[0m:{count}")
+            
+    if action == ("number of participants for each dance type").strip().casefold():
+        dance_counts = {}
+        
+        for p in participants:
+            dance= p["Dance"]
+            dance_counts[dance] = dance_counts.get(dance, 0) + 1
+            
+        for dance, count in dance_counts.items():
+            print(f"-\033[1m{dance}\033[0m:{count}")
+        
+    if action == ("participants in a specific dance type").strip().casefold():
+        dance_type = input("Select a dance type: ")
+        
+        for p in participants:
+            if dance_type==p["Dance"]:
+                print(p['Name'])
         
          
-
