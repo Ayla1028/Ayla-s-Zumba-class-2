@@ -1,8 +1,8 @@
 
 participants = [
-    {"Name": "Sarah", "Age": "25", "Niveau": "débutant", "Genre": "femme", "Dance": "bachata", "Sessions": ["Lundi","Mercredi"], "abonnement_renouvle": True},
-    {"Name":"Omar","Age": "30", "Niveau": "avancé", "Genre": "homme", "Dance": "tango", "Sessions": ["Jeudi"],"abonnement_renouvle": False},
-    {"Name":"instructor","Age": "35", "Niveau": "avancé", "Genre": "femme", "Dance": "hip-hop", "Sessions": ["Mercredi","Samedi"],"abonnement_renouvle": True}
+    {"Name": "Sarah", "Age": "25", "Niveau": "débutant", "Genre": "femme", "Dance": ["bachata","ballet"], "Sessions": ["Lundi","Mercredi"], "abonnement_renouvle": True},
+    {"Name":"Omar","Age": "30", "Niveau": "avancé", "Genre": "homme", "Dance": ["tango","hip-hop"], "Sessions": ["Jeudi"],"abonnement_renouvle": False},
+    {"Name":"instructor","Age": "35", "Niveau": "avancé", "Genre": "femme", "Dance": ["hip-hop","breakdance"], "Sessions": ["Mercredi","Samedi"],"abonnement_renouvle": True}
     ]
 
 while True:
@@ -128,11 +128,16 @@ while True:
         for dance, count in dance_counts.items():
             print(f"-\033[1m{dance}\033[0m:{count}")
         
-    if action == ("participants in a specific dance type").strip().casefold():
-        dance_type = input("Select a dance type: ")
-        
+    if action == "participants in a specific dance type":
+        dance_type = input("Select a dance type: ").strip()
+        found = False
         for p in participants:
-            if dance_type==p["Dance"]:
-                print(p['Name'])
-        
-         
+            if dance_type in p["Dance"]:
+                print(p["Name"], "-", p["Dance"])
+                found = True
+                
+        if found==True:
+            print("participants have been found")
+        else:
+            print("No participants in this dance type")
+  
