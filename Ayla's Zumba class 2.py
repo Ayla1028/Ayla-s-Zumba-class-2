@@ -1,17 +1,38 @@
 
 participants = [
-    {"Name": "Sarah", "Age": "25", "Niveau": "débutant", "Genre": "femme", "Dance": ["bachata","ballet"], "Sessions": ["Lundi","Mercredi"], "abonnement_renouvle": True},
-    {"Name":"Omar","Age": "30", "Niveau": "avancé", "Genre": "homme", "Dance": ["tango","hip-hop"], "Sessions": ["Jeudi"],"abonnement_renouvle": False},
-    {"Name":"instructor","Age": "35", "Niveau": "avancé", "Genre": "femme", "Dance": ["hip-hop","breakdance"], "Sessions": ["Mercredi","Samedi"],"abonnement_renouvle": True}
+    {"Name": "Sarah", "Age": 25, "Niveau": "débutant", "Genre": "femme", "Dance": ["bachata","ballet"], "Sessions": ["Lundi","Mercredi"], "abonnement_renouvle": True},
+    {"Name":"Omar","Age": 30, "Niveau": "avancé", "Genre": "homme", "Dance": ["tango","hip-hop"], "Sessions": ["Jeudi"],"abonnement_renouvle": False},
+    {"Name":"instructor","Age": 35, "Niveau": "avancé", "Genre": "femme", "Dance": ["hip-hop","breakdance"], "Sessions": ["Mercredi","Samedi"],"abonnement_renouvle": True},
+    {"Name":"Liam", "Age": 15, "Niveau": "débutant", "Genre": "homme", "Dance": ["bachata","tango"], "Sessions":["Jeudi","Samedi"], "abonnement_renouvle": False}
     ]
-
+parents = [
+    {"Name":"Anna"}
+    ]
+children = [
+    {"Name":"Liam", "Parent": parents[0]}
+    ]
 while True:
-    action = input ("Please enter an action: ").strip().casefold()
+    print("\033[1mBonjour! Bienvenue aux sessions de danse.\033[0m")
+    print("1-view participants")
+    print("2-view details")
+    print("3-view participant details")
+    print("4-add participant")
+    print("5-remove participant")
+    print("6-clear")
+    print("7-remove participants without subscription")
+    print("8-number of participants in each level")
+    print("9-number of participants for each dance type")
+    print("10-participants in a specific dance type")
+    print("11-exit")
+    action = input ("\033[1mChoisir une action:\033[0m").strip().casefold()
     
     if action == "view participants":
         print ("\033[1mParticipants:\033[0m")
         for p in participants:
             print("-",p["Name"])
+        for p in participants:
+            if p["Age"]<18:
+                print(f"\033[1mWarning:\033[0m L'autorisation d'un parent est obligatoire pour",p["Name"])
         
     if action == ("view details").strip().casefold():
         for participant in participants:
@@ -33,6 +54,8 @@ while True:
                           f"\033[1mNiveau:\033[0m {participant['Niveau']}, "
                           f"\033[1mDance:\033[0m {participant['Dance']}, "
                           f"\033[1mAbonnement renouvlé:\033[0m {participant['abonnement_renouvle']}" )
+                    if participant["Age"]<18:
+                        print(f"\033[1mWarning:\033[0m L'autorisation d'un parent est obligatoire pour",participant["Name"])
                  
         elif participant_entered not in participants:
             print(participant_entered, "is not a participant.")
@@ -71,7 +94,7 @@ while True:
             elif answer == "yes":
                 participant_name = input("Enter a new participant name: ").strip().title()
         
-        participant_age = input ("Age of new participant: ").strip().casefold()
+        participant_age = int(input ("Age of new participant: "))
         participant_genre = input ("Gender of new participant: ").strip().casefold()
         participant_niveau = input("Level of new participant: ").strip().casefold()
         participant_dance = input ("Dance type of new participant: ").strip().casefold()
@@ -84,8 +107,12 @@ while True:
                            "Dance": participant_dance,
                            "abonnement_renouvle": participant_abonnement_renouvle}
         
-        participants.append(new_participant)
-        print (new_participant["Name"].title(), "has been added as a participant.")
+        if participant_age<18:
+            print(f"\033[1mWarning:\033[0m L'autorisation d'un parent est obligatoire")
+            
+        else:
+             participants.append(new_participant)
+             print (new_participant["Name"].title(), "has been added as a participant.")
         
     if action  == ("remove participant").strip().casefold():
         participant_removed = input("Who would you like to remove as a participant? ").strip().casefold()
@@ -121,6 +148,7 @@ while True:
     if action == ("number of participants for each dance type").strip().casefold():
         dance_counts = {}
         
+        
         for p in participants:
             dance= p["Dance"]
             dance_counts[dance] = dance_counts.get(dance, 0) + 1
@@ -133,11 +161,21 @@ while True:
         found = False
         for p in participants:
             if dance_type in p["Dance"]:
-                print(p["Name"], "-", p["Dance"])
+                #print(p["Name"], "-", p["Dance"])
                 found = True
                 
         if found==True:
-            print("participants have been found")
+            print(f"\033[1mparticipants registered for", dance_type,":\033[0m")
+            for p in participants:
+                if dance_type in p ["Dance"]:
+                    print("-",p["Name"])
+                    if p["Age"] < 18:
+                        print(f"\033[1mWarning:\033[0m L'autorisation d'un parent est obligatoire pour", p["Name"])
+        
         else:
             print("No participants in this dance type")
+            
+    
+    
+    
   
