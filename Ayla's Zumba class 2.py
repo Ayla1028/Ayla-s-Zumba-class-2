@@ -12,18 +12,19 @@ children = [
     {"Name":"Liam", "Parent": parents[0]}
     ]
 while True:
+    print("---------------------------------------------------------")
     print("\033[1mBonjour! Bienvenue aux sessions de danse.\033[0m")
-    print("1-view participants")
-    print("2-view details")
-    print("3-view participant details")
-    print("4-add participant")
-    print("5-remove participant")
-    print("6-clear")
-    print("7-remove participants without subscription")
-    print("8-number of participants in each level")
-    print("9-number of participants for each dance type")
-    print("10-participants in a specific dance type")
-    print("11-exit")
+    print("\033[1m1-\033[0mview participants")
+    print("\033[1m2-\033[0mview details")
+    print("\033[1m3-\033[0mview participant details")
+    print("\033[1m4-\033[0madd participant")
+    print("\033[1m5-\033[0mremove participant")
+    print("\033[1m6-\033[0mclear")
+    print("\033[1m7-\033[0mremove participants without subscription")
+    print("\033[1m8-\033[0mnumber of participants in each level")
+    print("\033[1m9-\033[0mnumber of participants for each dance type")
+    print("\033[1m10-\033[0mparticipants in a specific dance type")
+    print("\033[1m11-\033[0mexit")
     action = input ("\033[1mChoisir une action:\033[0m").strip().casefold()
     
     if action == "view participants":
@@ -175,7 +176,31 @@ while True:
         else:
             print("No participants in this dance type")
             
-    
-    
-    
+    if action == "view zumbini members".casefold().strip():
+        for c in children:
+            print("\033[1m-Kid:\033[0m",c["Name"], "\033[1mParent:\033[0m ",c["Parent"]["Name"])
+            
+    if action == "view specific zumbini kid":
+        kid = input("Select a zumbini member: ")
+        if any(c["Name"] == kid for c in children):
+            
+            print(f"A child named {kid} exists!")
+        elif kid not in children:
+                    answer = input("Would you like to register this kid?(Yes/No)")
+                    if answer=="Yes":
+                        parent= input("Name of the parent:")
+                        new_kid={"Name": kid, "Parent": parent}
+                        autorization = input("Are you the child's parent?(Yes/No)")
+                        if autorization == "Yes":
+                            children.append(new_kid)
+                            print(kid, "has been added as a zumbini member!")
+                        elif autorization == "No":
+                            print("Authorization not granted. Only a parent may register his child")
+                    elif answer== "No":
+                        print("Okay. Have a good day!")
+                        
+                        
+                        
+                    
+                     
   
